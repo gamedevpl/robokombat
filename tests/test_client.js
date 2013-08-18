@@ -15,6 +15,6 @@ require(['World:lib/world.js', 'Player:lib/player.js', 'Viewport:lib/viewport.js
 		view.animation(function(dt) {
 			view.circle(0, 0, 100);
 		});
-		
+
 		view.init();
 	});
