@@ -1,6 +1,6 @@
 // test_client.js
 
-require(['World:lib/world.js', 'Player:lib/player.js', 'Viewport:lib/viewport.js',
+require(['World:lib/world.js', 'Player:lib/player.js', 'Viewport:lib/gamedev-lib/lib/gfx/viewport.js',
 	'Assets:lib/gamedev-lib/lib/gfx/assets.js', 'Sprite:lib/gamedev-lib/lib/gfx/sprite.js'], //
 	function(World, Player, Viewport, Assets, Sprite) {
 		var assets = new Assets('../assets/');
@@ -21,8 +21,8 @@ require(['World:lib/world.js', 'Player:lib/player.js', 'Viewport:lib/viewport.js
 		var view = new Viewport(document.querySelector("#viewport"));
 		view.init();
 
-		assets.loadImages(['sprites/liukang/idle.png']).then(function(sprites) {
-			var sprite = new Sprite(sprites[0], { spriteWidth: 77, spriteHeight: 133 });
+		assets.loadImages(['sprites/liukang/middle_punch_120_140.png']).then(function(sprites) {
+			var sprite = new Sprite(sprites[0], { spriteWidth: 120, spriteHeight: 140 });
 
 			var t = 0;
 			view.animation(function(dt) {
