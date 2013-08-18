@@ -1,6 +1,6 @@
 // test_client.js
 
-require(['World:../lib/world.js', 'Player:../lib/player.js', 'Viewport:../lib/viewport.js'], //
+require(['World:lib/world.js', 'Player:lib/player.js', 'Viewport:lib/viewport.js'], //
 	function(World, Player, Viewport) {
 		var world = new World();
 
