@@ -21,15 +21,27 @@ require(['World:lib/world.js', 'Player:lib/player.js', 'Viewport:lib/gamedev-lib
 		var view = new Viewport(document.querySelector("#viewport"));
 		view.init();
 
-		assets.loadImages(['sprites/liukang/middle_punch_120_140.png']).then(function(sprites) {
-			var sprite = new Sprite(sprites[0], { spriteWidth: 120, spriteHeight: 140 });
+		assets.loadImages(['sprites/liukang/idle_77_133.png', 
+						   'sprites/liukang/walk_74_133.png',
+						   'sprites/liukang/middle_punch_120_140.png']).then(function(sprites) {
+			var sprite1 = new Sprite(sprites[0], { spriteWidth: 77, spriteHeight: 133 });
+			var sprite2 = new Sprite(sprites[1], { spriteWidth: 74, spriteHeight: 133 });
+			var sprite3 = new Sprite(sprites[2], { spriteWidth: 120, spriteHeight: 140});
 
 			var t = 0;
 			view.animation(function(dt) {
 				view.clear('#000000');
 				view.transform().translate(-77/2, -133/2).then(function() {
-					sprite.index = ((t += dt*10) >> 0) % sprite.frameCount;
-					sprite.render(view.getContext());
+					sprite1.index = ((t += dt*10) >> 0) % sprite1.frameCount;
+					sprite1.render(view.getContext());
+				});
+				view.transform().translate(77/2, -133/2).then(function() {
+					sprite2.index = ((t) >> 0) % sprite2.frameCount;
+					sprite2.render(view.getContext());
+				});
+				view.transform().translate(-77/2, 133/2).then(function() {
+					sprite3.index = ((t) >> 0) % sprite3.frameCount;
+					sprite3.render(view.getContext());
 				});
 			});
 		});
