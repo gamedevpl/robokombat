@@ -1,3 +1,6 @@
 [submodule "lib/gamedev-lib"]
 	path = lib/gamedev-lib
 	url = git@github.com:gamedevpl/gamedev-lib.git
+[submodule "lib\\gamedev-lib"]
+	path = lib\\gamedev-lib
+	url = git@github.com:gamedevpl/gamedev-lib.git
