@@ -8,16 +8,7 @@ require(['World:lib/world.js', 'Player:lib/player.js', 'Viewport:lib/gamedev-lib
 
 		var world = new World();
 
-		var playerOne = new Player('player 1');
-
-		var PlayerTwo = Player.extend(function PlayerTwo(name) {
-			this.superclass.Player.call(this, name);
-		});
-
-		var playerTwo = new PlayerTwo('player 2');
-
-		world.addPlayer(playerOne);
-		world.addPlayer(playerTwo);
+		var player = new Player(0, 0);
 
 		var view = new Viewport(document.querySelector("#viewport"));
 		view.init();
@@ -28,35 +19,44 @@ require(['World:lib/world.js', 'Player:lib/player.js', 'Viewport:lib/gamedev-lib
 						   'sprites/liukang/walk_74_133.png',
 						   'sprites/liukang/middle_punch_120_140.png']).then(function(sprites) {
 							   
-			var sprite1 = new Sprite(sprites[0], { spriteWidth: 77, spriteHeight: 133 });
-			var sprite2 = new Sprite(sprites[1], { spriteWidth: 74, spriteHeight: 133 });
-			var sprite3 = new Sprite(sprites[2], { spriteWidth: 120, spriteHeight: 140});
+			var idle = new Sprite(sprites[0], { spriteWidth: 77, spriteHeight: 133 });
+			var walk = new Sprite(sprites[1], { spriteWidth: 74, spriteHeight: 133 });
+			var punch = new Sprite(sprites[2], { spriteWidth: 120, spriteHeight: 140});
 
-			var t = 0;
-			
-			var x = 0;
-			
 			view.animation(function(dt) {
 				view.clear('#000000');
 				
 				if(control.isPressed(Keycodes.RIGHT_ARROW))
-					x += dt*100;
+					player.steerLeft();
+				else if(control.isPressed(Keycodes.LEFT_ARROW))
+					player.steerRight();
+				else
+					player.idle();
 				
-				if(control.isPressed(Keycodes.LEFT_ARROW))
-					x -= dt*100;
+				player.update(dt);
+
+				var position = player.getPosition();
+				var state = player.getStateName();
+				var stateProgress = player.getStateProgress();
 				
-				view.transform().translate(-77/2 + x, -133/2).then(function() {
-					sprite1.index = ((t += dt*10) >> 0) % sprite1.frameCount;
-					sprite1.render(view.getContext());
+				view.transform().translate(position[0], position[1]).scale(player.getOrientation(), 1).
+					translate(-77/2, -133/2 + position[1]).then(function() {
+					var sprite;
+					if(state == 'idle')
+						sprite = idle;
+					else if(state == 'walk')
+						sprite = walk;
+					sprite.index = ((stateProgress*10) >> 0) % idle.frameCount;
+					sprite.render(view.getContext());					
 				});
-				view.transform().translate(77/2, -133/2).then(function() {
-					sprite2.index = ((t) >> 0) % sprite2.frameCount;
-					sprite2.render(view.getContext());
-				});
-				view.transform().translate(-77/2, 133/2).then(function() {
-					sprite3.index = ((t) >> 0) % sprite3.frameCount;
-					sprite3.render(view.getContext());
-				});
+//				view.transform().translate(77/2, -133/2).then(function() {
+//					sprite2.index = ((t) >> 0) % sprite2.frameCount;
+//					sprite2.render(view.getContext());
+//				});
+//				view.transform().translate(-77/2, 133/2).then(function() {
+//					sprite3.index = ((t) >> 0) % sprite3.frameCount;
+//					sprite3.render(view.getContext());
+//				});
 			});
 		});
 	});
